@@ -174,3 +174,5 @@ sketch
 # Uncomment the following lines if you're not using Zero-Installs:
 # .yarn/cache
 # .pnp.*
+
+*.jpg
