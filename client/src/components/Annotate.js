@@ -7,13 +7,12 @@ const Annotate = () => {
   const part = queryString.replace(/[0-9]/g, "");
   var image = { filename: queryString + ".jpg" };
 
-  const [select, setSelect] = useState("valid");
+  const [select, setSelect] = useState("");
 
   const changeOnClick = (e) => {
     e.preventDefault();
 
     image.status = select;
-    console.log(image);
   };
 
   return (
@@ -30,11 +29,10 @@ const Annotate = () => {
             ></img>
             <hr />
           </div>
-          <div className="btn-group btn-group-toggle" data-toggle="buttons">
+          <div className="btn-group" data-toggle="buttons">
             <label className="btn btn-outline-primary">
               <input
                 type="radio"
-                name="options"
                 value="valid"
                 checked={select === "valid"}
                 onChange={(e) => setSelect(e.target.value)}
@@ -44,7 +42,6 @@ const Annotate = () => {
             <label className="btn btn-outline-danger">
               <input
                 type="radio"
-                name="options"
                 value="invalid"
                 checked={select === "invalid"}
                 onChange={(e) => setSelect(e.target.value)}
@@ -54,14 +51,15 @@ const Annotate = () => {
             <label className="btn btn-outline-secondary">
               <input
                 type="radio"
-                name="options"
                 value="unusable"
                 checked={select === "unusable"}
                 onChange={(e) => setSelect(e.target.value)}
               />{" "}
               Unusable
             </label>
-            <button type="submit" className="btn btn-primary">
+          </div>
+          <div>
+            <button type="submit" className="btn btn-primary next">
               Next
             </button>
           </div>
@@ -82,5 +80,18 @@ const AnnotateContainer = styled.div`
   .container > img {
     max-width: 100%;
     max-height: 100%;
+  }
+
+  .options:focus {
+    border-color: #000;
+  }
+
+  .btn-outline-primary {
+    &:active {
+      background: #000;
+    }
+  }
+
+  .next {
   }
 `;
