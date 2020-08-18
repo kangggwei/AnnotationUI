@@ -1,18 +1,29 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import NavBar from "./Navbar";
+import axios from "axios";
+import { Link } from "react-router-dom";
 
 const Annotate = () => {
+  const [select, setSelect] = useState("");
+  const [message, setMessage] = useState("");
   const queryString = window.location.pathname.replace("/", "");
   const part = queryString.replace(/[0-9]/g, "");
-  var image = { filename: queryString + ".jpg" };
-
-  const [select, setSelect] = useState("");
+  var image = { filename: `${queryString}.jpg` };
+  var id_ = Number(queryString.replace(part, ""));
 
   const changeOnClick = (e) => {
     e.preventDefault();
 
-    image.status = select;
+    let sentImage = image;
+    sentImage.status = select;
+
+    setSelect("");
+
+    axios
+      .post("/annotations/add", sentImage)
+      .then((res) => setMessage(res.data))
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -23,6 +34,7 @@ const Annotate = () => {
           <div className="container">
             <h4>Filename: {image.filename}</h4>
             <br />
+            <span className="message">{message}</span>
             <img
               src={require(`../output/${part}/${image.filename}`)}
               alt="validation"
@@ -59,9 +71,15 @@ const Annotate = () => {
             </label>
           </div>
           <div>
-            <button type="submit" className="btn btn-primary next">
-              Next
+            <button type="submit" className="btn btn-primary">
+              Update
             </button>
+            <Link
+              to={`/${part}${(++id_).toString()}`}
+              className="btn btn-outline-success"
+            >
+              Next
+            </Link>
           </div>
         </form>
       </AnnotateContainer>
@@ -82,16 +100,11 @@ const AnnotateContainer = styled.div`
     max-height: 100%;
   }
 
-  .options:focus {
-    border-color: #000;
+  .message {
+    color: tomato;
   }
 
-  .btn-outline-primary {
-    &:active {
-      background: #000;
-    }
-  }
-
-  .next {
+  .btn-primary {
+    margin: 2rem;
   }
 `;
