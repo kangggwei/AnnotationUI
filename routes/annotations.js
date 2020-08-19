@@ -45,9 +45,9 @@ router.put("/update/:id", (req, res) => {
 });
 
 // request: FIND article by ID and delete
-router.delete("/:id", (req, res) => {
-  Annotations.findByIdAndDelete(req.params.id)
-    .then(() => res.json("Annotation has been deleted successfully."))
+router.delete("/delete", (req, res) => {
+  Annotations.deleteMany({})
+    .then(() => res.json("All annotations have been deleted successfully."))
     .catch((err) => res.status(400).json(`Error: ${err}`));
 });
 module.exports = router;
