@@ -10,9 +10,6 @@ const NavBar = () => {
           <Link className="navbar-brand" to="/">
             Home
           </Link>
-          <Link className="nav-link" to="/annotate">
-            Annotate
-          </Link>
         </div>
       </Navbar>
     </div>

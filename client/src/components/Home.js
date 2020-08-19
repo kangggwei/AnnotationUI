@@ -24,7 +24,7 @@ const Home = () => {
     setImageCollections("");
   };
 
-  const download = () => {
+  const saveJSON = () => {
     axios
       .get(`/annotations/`)
       .then((res) => setImageCollections(res.data))
@@ -43,8 +43,8 @@ const Home = () => {
       <NavBar></NavBar>
       <Header className="form-group">
         <div className="toggling">
-          <button onClick={download} className="btn btn-outline-success">
-            Download
+          <button onClick={saveJSON} className="btn btn-outline-success">
+            Save Json
           </button>
           <button onClick={saveFile} className="btn btn-outline-success">
             Save Local File
