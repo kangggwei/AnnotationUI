@@ -46,7 +46,7 @@ router.put("/update/:id", (req, res) => {
 
 // request: DELETE all annotations
 router.delete("/delete", (req, res) => {
-  Annotations.deleteMany({})
+  Annotations.deleteMany()
     .then(() => res.json("All annotations have been deleted successfully."))
     .catch((err) => res.status(400).json(`Error: ${err}`));
 });

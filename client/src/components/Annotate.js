@@ -15,15 +15,16 @@ const Annotate = () => {
   const changeOnClick = (e) => {
     e.preventDefault();
 
-    let sentImage = image;
-    sentImage.status = select;
-
-    setSelect("");
+    image.status = select;
 
     axios
-      .post("/annotations/add", sentImage)
+      .post("/annotations/add", image)
       .then((res) => setMessage(res.data))
       .catch((err) => console.log(err));
+  };
+
+  const nextImage = () => {
+    setMessage("");
   };
 
   return (
@@ -34,7 +35,7 @@ const Annotate = () => {
           <div className="container">
             <h4>Filename: {image.filename}</h4>
             <br />
-            <span className="message">{message}</span>
+            {message && <span className="message">{message}</span>}
             <img
               src={require(`../output/${part}/${image.filename}`)}
               alt="validation"
@@ -77,6 +78,7 @@ const Annotate = () => {
             <Link
               to={`/${part}${(++id_).toString()}`}
               className="btn btn-outline-success"
+              onClick={nextImage}
             >
               Next
             </Link>

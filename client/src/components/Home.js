@@ -2,15 +2,58 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import NavBar from "./Navbar";
+import axios from "axios";
+import { saveAs } from "file-saver";
 
 const Home = () => {
   const [part, setPart] = useState("leftWrist");
+  const [imageCollections, setImageCollections] = useState("");
   var images = require(`../output/${part}.json`);
+
+  const saveFile = () => {
+    const fileName = "annotation.json";
+    const fileToSave = new Blob(
+      [JSON.stringify(imageCollections, undefined, 2)],
+      {
+        type: "application/json",
+        name: fileName,
+      }
+    );
+    saveAs(fileToSave, fileName);
+
+    setImageCollections("");
+  };
+
+  const download = () => {
+    axios
+      .get(`/annotations/`)
+      .then((res) => setImageCollections(res.data))
+      .catch((err) => console.log(err));
+  };
+
+  const deleteAll = () => {
+    axios
+      .delete(`/annotations/delete`)
+      .then((res) => alert(res.data))
+      .catch((err) => console.log(err));
+  };
 
   return (
     <>
       <NavBar></NavBar>
       <Header className="form-group">
+        <div className="toggling">
+          <button onClick={download} className="btn btn-outline-success">
+            Download
+          </button>
+          <button onClick={saveFile} className="btn btn-outline-success">
+            Save Local File
+          </button>
+          <button onClick={deleteAll} className="btn btn-outline-danger">
+            Reset
+          </button>
+        </div>
+        <br />
         <label htmlFor="part">Part Name</label>
         <select
           value={part}
@@ -48,7 +91,11 @@ export default Home;
 const Header = styled.div`
   justify-content: center;
   max-width: 70rem;
-  margin: 2rem auto;
+  margin: 1rem auto;
+
+  .btn {
+    margin: 1rem 1rem 1rem 0;
+  }
 `;
 
 const MainContainer = styled.div`
