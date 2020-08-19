@@ -42,3 +42,18 @@ npm run dev
 ## Step 4
 
 Annotate the images, make sure to pick the option before going to the next image.
+
+
+## To Do
+
+Can consider following code to save data so PC, using JSON object from GET request.
+
+```
+import { saveAs } from file-saver;
+
+const handleSaveToPC = jsonData => {
+  const fileName = 'annotation.json';
+  const fileToSave = new Blob([JSON.stringify(jsonData, undefined, 2)], {type: "application/json", name: fileName});
+  saveAs(fileToSave, fileName);
+}
+```
