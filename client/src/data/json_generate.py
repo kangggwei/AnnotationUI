@@ -7,7 +7,7 @@ import re
 Generates JSON for each part used to feed into React App to display images in output folder, for output folder format, refer to README file
 '''
 
-PARTS = ["leftWrist", "rightWrist", "mask", "back"]
+PARTS = ["item1", "item2", "item3", "item4"]
 
 for PART in PARTS:
     try:

@@ -8,7 +8,7 @@ import { saveAs } from "file-saver";
 const Home = () => {
   const [part, setPart] = useState("leftWrist");
   const [imageCollections, setImageCollections] = useState("");
-  var images = require(`../output/${part}.json`);
+  var images = require(`../data/${part}.json`);
 
   const saveFile = () => {
     const fileName = "annotation.json";
